@@ -11,7 +11,57 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".ui.activities.MainActivity">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/spacing_medial_24"
+            android:paddingTop="@dimen/spacing_medial_24">
 
+            <LinearLayout
+                style="@style/TopToolbarStyle">
+                <TextView
+                    style="@style/TopToolbarTextViewStyle"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="5"/>
+                <TextView
+                    style="@style/TopToolbarTextViewStyle"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Рейтинг"/>
+            </LinearLayout>
+            
+            <View
+                style="@style/VerticalLinesStyle"/>
+
+            <LinearLayout
+                style="@style/TopToolbarStyle"
+                android:layout_weight="2">
+                <TextView
+                    style="@style/TopToolbarTextViewStyle"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="5"/>
+                <TextView
+                    style="@style/TopToolbarTextViewStyle"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Написано строк кода"/>
+            </LinearLayout>
+
+            <View
+                style="@style/VerticalLinesStyle"/>
+
+            <LinearLayout
+                style="@style/TopToolbarStyle">
+                <TextView
+                    style="@style/TopToolbarTextViewStyle"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="5"/>
+                <TextView
+                    style="@style/TopToolbarTextViewStyle"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Проектов"/>
+            </LinearLayout>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
