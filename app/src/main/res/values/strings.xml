@@ -5,4 +5,5 @@
     <string name="vk_profile">Профиль в VK</string>
     <string name="repo">Репозиторий</string>
     <string name="about">О себе</string>
+    <string name="picture">Picture</string>
 </resources>

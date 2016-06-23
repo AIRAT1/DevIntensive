@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
+                android:contentDescription="@string/picture"
                 style="@style/Icon.left"
                 android:src="@drawable/ic_call_black_24dp"/>
             <LinearLayout
@@ -38,6 +39,7 @@
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <ImageView
+                android:contentDescription="@string/picture"
                 style="@style/Icon.right"
                 android:src="@drawable/ic_phone_in_talk_black_24dp"/>
         </LinearLayout>
@@ -46,6 +48,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
+                android:contentDescription="@string/picture"
                 style="@style/Icon.left"
                 android:src="@drawable/ic_email_black_24dp"/>
             <LinearLayout
@@ -66,6 +69,7 @@
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <ImageView
+                android:contentDescription="@string/picture"
                 style="@style/Icon.right"
                 android:src="@drawable/ic_send_black_24dp"/>
         </LinearLayout>
@@ -74,6 +78,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
+                android:contentDescription="@string/picture"
                 style="@style/Icon.left"
                 android:src="@drawable/ic_call_black_24dp"/>
             <LinearLayout
@@ -94,6 +99,7 @@
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <ImageView
+                android:contentDescription="@string/picture"
                 style="@style/Icon.right"
                 android:src="@drawable/ic_remove_red_eye_black_24dp"/>
         </LinearLayout>
@@ -102,6 +108,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
+                android:contentDescription="@string/picture"
                 style="@style/Icon.left"
                 android:src="@drawable/ic_call_black_24dp"/>
             <LinearLayout
@@ -122,6 +129,7 @@
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <ImageView
+                android:contentDescription="@string/picture"
                 style="@style/Icon.right"
                 android:src="@drawable/ic_remove_red_eye_black_24dp"/>
         </LinearLayout>
@@ -130,6 +138,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <ImageView
+                android:contentDescription="@string/picture"
                 style="@style/Icon.left"
                 android:src="@drawable/ic_account_circle_black_24dp"/>
             <LinearLayout
@@ -150,6 +159,7 @@
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <ImageView
+                android:contentDescription="@string/picture"
                 style="@style/Icon.right"
                 android:src="@drawable/ic_remove_red_eye_black_24dp"/>
         </LinearLayout>
