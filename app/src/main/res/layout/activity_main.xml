@@ -25,14 +25,16 @@
                 android:layout_height="@dimen/size_large_72"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center_vertical"
+                android:gravity="bottom"
                 android:layout_marginLeft="@dimen/spacing_medium_32"
                 android:layout_marginRight="@dimen/spacing_normal_16">
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <EditText
+                        android:id="@+id/phone_et"
                         style="@style/EditTextStartStyle"
+                        android:fontFamily="sans-serif-condensed"
                         android:inputType="phone"
                         android:text="01234567890"
                         android:hint="@string/mobile_number"/>
@@ -63,14 +65,16 @@
                 android:layout_height="@dimen/size_large_72"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center_vertical"
+                android:gravity="bottom"
                 android:layout_marginLeft="@dimen/spacing_medium_32"
                 android:layout_marginRight="@dimen/spacing_normal_16">
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <EditText
+                        android:id="@+id/email_et"
                         style="@style/EditTextStartStyle"
+                        android:fontFamily="sans-serif-condensed"
                         android:inputType="textEmailAddress"
                         android:text="abc@def.com"
                         android:hint="@string/e_mail"/>
@@ -101,14 +105,16 @@
                 android:layout_height="@dimen/size_large_72"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center_vertical"
+                android:gravity="bottom"
                 android:layout_marginLeft="@dimen/spacing_medium_32"
                 android:layout_marginRight="@dimen/spacing_normal_16">
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <EditText
+                        android:id="@+id/vk_et"
                         style="@style/EditTextStartStyle"
+                        android:fontFamily="sans-serif-condensed"
                         android:text="vk.com/id0123456"
                         android:hint="@string/vk_profile"/>
                 </android.support.design.widget.TextInputLayout>
@@ -138,14 +144,16 @@
                 android:layout_height="@dimen/size_large_72"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center_vertical"
+                android:gravity="bottom"
                 android:layout_marginLeft="@dimen/spacing_medium_32"
                 android:layout_marginRight="@dimen/spacing_normal_16">
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <EditText
+                        android:id="@+id/github_et"
                         style="@style/EditTextStartStyle"
+                        android:fontFamily="sans-serif-condensed"
                         android:text="github.com/user/DevIntensie"
                         android:hint="@string/repo"/>
                 </android.support.design.widget.TextInputLayout>
@@ -172,25 +180,24 @@
                 android:src="@drawable/ic_account_circle_black_24dp"/>
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="@dimen/size_large_72"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:gravity="center_vertical"
+                android:gravity="bottom"
                 android:layout_marginLeft="@dimen/spacing_medium_32"
                 android:layout_marginRight="@dimen/spacing_normal_16">
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <EditText
+                        android:id="@+id/about_et"
                         style="@style/EditTextStartStyle"
-                        android:text="About me"
+                        android:scrollHorizontally="false"
+                        android:fontFamily="sans-serif-condensed"
+                        android:text="@string/lorem_ipsum"
                         android:hint="@string/about"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
-            <ImageView
-                android:contentDescription="@string/picture"
-                style="@style/Icon.right"
-                android:src="@drawable/ic_remove_red_eye_black_24dp"/>
         </LinearLayout>
 
 
