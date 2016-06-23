@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name">DevIntensive</string>
-    <string name="mobile_number">Мобильный телефон</string>
+    <string name="app_name">Хайруллин Айрат</string>
+    <string name="mobile_number">Мобильный</string>
+    <string name="e_mail">E-mail</string>
+    <string name="vk_profile">Профиль в VK</string>
+    <string name="repo">Репозиторий</string>
+    <string name="about">О себе</string>
 </resources>
