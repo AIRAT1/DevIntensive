@@ -7,5 +7,16 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="Icon">
+        <item name="android:layout_width">@dimen/size_small_24</item>
+        <item name="android:layout_height">@dimen/size_small_24</item>
+        <item name="android:layout_marginTop">@dimen/size_small_24</item>
+    </style>
+    <style name="Icon.left">
+        <item name="android:layout_marginLeft">@dimen/size_small_24</item>
+    </style>
+    <style name="Icon.right">
+        <item name="android:layout_marginRight">@dimen/spacing_medium_32</item>
+    </style>
 
 </resources>
