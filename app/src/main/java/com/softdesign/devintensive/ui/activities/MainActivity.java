@@ -3,6 +3,7 @@ package com.softdesign.devintensive.ui.activities;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -32,6 +33,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mNavigationDrawer = (DrawerLayout)findViewById(R.id.navigation_drawer);
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         setupToolbar();
+        setupDriver();
         mCallImg.setOnClickListener(this);
         if (savedInstanceState == null) {
             showSnackbar("Активити запускается впервые");
@@ -91,7 +93,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
-
     private void runWithDelay() {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -129,5 +130,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }else {
             super.onBackPressed();
         }
+    }
+
+    private void setupDriver() {
+        NavigationView navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                showSnackbar(item.getTitle().toString());
+                item.setChecked(true);
+                mNavigationDrawer.closeDrawer(GravityCompat.START);
+                return false;
+            }
+        });
     }
 }
