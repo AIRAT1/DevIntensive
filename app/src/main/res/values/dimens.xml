@@ -22,4 +22,5 @@
     <dimen name="spacing_medium_tablet_80">80dp</dimen>
     <dimen name="spacing_large_tablet_96">96dp</dimen>
     <dimen name="spacing_largest_tablet_104">104dp</dimen>
+    <dimen name="line_size">2dp</dimen>
 </resources>
