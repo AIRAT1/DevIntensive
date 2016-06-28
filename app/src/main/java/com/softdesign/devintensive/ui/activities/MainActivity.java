@@ -13,9 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.softdesign.devintensive.R;
+import com.softdesign.devintensive.utils.ConstantManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
 
@@ -27,6 +32,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private Toolbar mToolbar;
     private DrawerLayout mNavigationDrawer;
     private FloatingActionButton mFab;
+    private EditText mUserPhone, mUserMail, mUserVk, mUserGit, mUserAbout;
+    private List<EditText> mUserInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,15 +45,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mNavigationDrawer = (DrawerLayout)findViewById(R.id.navigation_drawer);
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         mFab = (FloatingActionButton)findViewById(R.id.fab);
-        mFab.setOnClickListener(this);
+        mUserPhone = (EditText)findViewById(R.id.phone_et);
+        mUserMail = (EditText)findViewById(R.id.email_et);
+        mUserVk = (EditText)findViewById(R.id.vk_et);
+        mUserGit = (EditText)findViewById(R.id.github_et);
+        mUserAbout = (EditText)findViewById(R.id.about_et);
+        mUserInfo = new ArrayList<>();
+        mUserInfo.add(mUserPhone);
+        mUserInfo.add(mUserMail);
+        mUserInfo.add(mUserVk);
+        mUserInfo.add(mUserGit);
+        mUserInfo.add(mUserAbout);
 
+        mFab.setOnClickListener(this);
         setupToolbar();
-        setupDriver();
+        setupDraver();
+
+
         mCallImg.setOnClickListener(this);
         if (savedInstanceState == null) {
-            showSnackbar("Активити запускается впервые");
+//            showSnackbar("Активити запускается впервые");
         }else {
-            showSnackbar("Активити уже создавалось");
+//            showSnackbar("Активити уже создавалось");
+            mCurrentEditMode = savedInstanceState.getInt(ConstantManager.EDIT_MODE_KEY, 0);
+            changeEditMode(mCurrentEditMode);
         }
     }
 
@@ -89,6 +111,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putInt(ConstantManager.EDIT_MODE_KEY, mCurrentEditMode);
     }
     private void showSnackbar(String message) {
         Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_LONG).show();
@@ -119,7 +142,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 runWithDelay();
                 break;
             case R.id.fab:
-                showSnackbar("click");
+                if (mCurrentEditMode == 0) {
+                    changeEditMode(1);
+                    mCurrentEditMode = 1;
+                }else {
+                    changeEditMode(0);
+                    mCurrentEditMode = 0;
+                }
                 break;
             default:
                 break;
@@ -143,7 +172,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
-    private void setupDriver() {
+    private void setupDraver() {
         NavigationView navigationView = (NavigationView)findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -154,5 +183,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 return false;
             }
         });
+    }
+    private void changeEditMode(int mode) {
+        if (mode == 1) {
+            mFab.setImageResource(R.drawable.ic_done_black_24dp);
+            for (EditText userValue : mUserInfo) {
+                userValue.setEnabled(true);
+                userValue.setFocusable(true);
+                userValue.setFocusableInTouchMode(true);
+            }
+        }else {
+            mFab.setImageResource(R.drawable.ic_create_black_24dp);
+            for (EditText userValue : mUserInfo) {
+                userValue.setEnabled(false);
+                userValue.setFocusable(false);
+                userValue.setFocusableInTouchMode(false);
+            }
+        }
+    }
+    private void loadUserInfoValue() {
+
+    }
+    private void saveUserInfoValue() {
+
     }
 }
