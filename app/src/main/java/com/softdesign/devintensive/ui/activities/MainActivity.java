@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.softdesign.devintensive.R;
+import com.softdesign.devintensive.managers.DataManager;
 import com.softdesign.devintensive.utils.ConstantManager;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     public static final String TAG = MainActivity.class.getSimpleName();
+    private DataManager mDataManager;
     private int mCurrentEditMode = 0;
 
     private ImageView mCallImg;
@@ -33,13 +35,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private DrawerLayout mNavigationDrawer;
     private FloatingActionButton mFab;
     private EditText mUserPhone, mUserMail, mUserVk, mUserGit, mUserAbout;
-    private List<EditText> mUserInfo;
+    private List<EditText> mUserInfoViews;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate");
 
+        mDataManager = DataManager.getInstance();
         mCallImg = (ImageView)findViewById(R.id.call_img);
         mCoordinatorLayout = (CoordinatorLayout)findViewById(R.id.main_Coordinator_container);
         mNavigationDrawer = (DrawerLayout)findViewById(R.id.navigation_drawer);
@@ -50,16 +53,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mUserVk = (EditText)findViewById(R.id.vk_et);
         mUserGit = (EditText)findViewById(R.id.github_et);
         mUserAbout = (EditText)findViewById(R.id.about_et);
-        mUserInfo = new ArrayList<>();
-        mUserInfo.add(mUserPhone);
-        mUserInfo.add(mUserMail);
-        mUserInfo.add(mUserVk);
-        mUserInfo.add(mUserGit);
-        mUserInfo.add(mUserAbout);
+        mUserInfoViews = new ArrayList<>();
+        mUserInfoViews.add(mUserPhone);
+        mUserInfoViews.add(mUserMail);
+        mUserInfoViews.add(mUserVk);
+        mUserInfoViews.add(mUserGit);
+        mUserInfoViews.add(mUserAbout);
 
         mFab.setOnClickListener(this);
         setupToolbar();
         setupDraver();
+        loadUserInfoValue();
+
+//        List<String> test = mDataManager.getPreferencesManager().loadUserProfileData();
 
 
         mCallImg.setOnClickListener(this);
@@ -94,6 +100,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     protected void onPause() {
         super.onPause();
         Log.d(TAG, "onPause");
+        saveUserInfoValue();
     }
 
     @Override
@@ -146,6 +153,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     changeEditMode(1);
                     mCurrentEditMode = 1;
                 }else {
+                    saveUserInfoValue();
                     changeEditMode(0);
                     mCurrentEditMode = 0;
                 }
@@ -187,14 +195,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private void changeEditMode(int mode) {
         if (mode == 1) {
             mFab.setImageResource(R.drawable.ic_done_black_24dp);
-            for (EditText userValue : mUserInfo) {
+            for (EditText userValue : mUserInfoViews) {
                 userValue.setEnabled(true);
                 userValue.setFocusable(true);
                 userValue.setFocusableInTouchMode(true);
             }
         }else {
             mFab.setImageResource(R.drawable.ic_create_black_24dp);
-            for (EditText userValue : mUserInfo) {
+            for (EditText userValue : mUserInfoViews) {
                 userValue.setEnabled(false);
                 userValue.setFocusable(false);
                 userValue.setFocusableInTouchMode(false);
@@ -202,9 +210,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
     private void loadUserInfoValue() {
-
+        List<String> userData = mDataManager.getPreferencesManager().loadUserProfileData();
+        for (int i = 0; i < userData.size(); i++) {
+            mUserInfoViews.get(i).setText(userData.get(i));
+        }
     }
     private void saveUserInfoValue() {
-
+        List<String> userData = new ArrayList<>();
+        for (EditText userFieldView : mUserInfoViews) {
+            userData.add(userFieldView.getText().toString());
+        }
+        mDataManager.getPreferencesManager().saveUserProfileData(userData);
     }
 }
