@@ -94,6 +94,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
+        loadUserInfoValue();
     }
 
     @Override
