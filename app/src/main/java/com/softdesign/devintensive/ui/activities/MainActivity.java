@@ -3,6 +3,7 @@ package com.softdesign.devintensive.ui.activities;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -19,19 +20,26 @@ import com.softdesign.devintensive.R;
 public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     public static final String TAG = MainActivity.class.getSimpleName();
+    private int mCurrentEditMode = 0;
+
     private ImageView mCallImg;
     private CoordinatorLayout mCoordinatorLayout;
     private Toolbar mToolbar;
     private DrawerLayout mNavigationDrawer;
+    private FloatingActionButton mFab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate");
+
         mCallImg = (ImageView)findViewById(R.id.call_img);
         mCoordinatorLayout = (CoordinatorLayout)findViewById(R.id.main_Coordinator_container);
         mNavigationDrawer = (DrawerLayout)findViewById(R.id.navigation_drawer);
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
+        mFab = (FloatingActionButton)findViewById(R.id.fab);
+        mFab.setOnClickListener(this);
+
         setupToolbar();
         setupDriver();
         mCallImg.setOnClickListener(this);
@@ -109,6 +117,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case R.id.call_img:
                 showProgress();
                 runWithDelay();
+                break;
+            case R.id.fab:
+                showSnackbar("click");
                 break;
             default:
                 break;
