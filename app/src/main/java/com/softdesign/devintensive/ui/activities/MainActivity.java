@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.softdesign.devintensive.R;
-import com.softdesign.devintensive.managers.DataManager;
+import com.softdesign.devintensive.data.manager.DataManager;
 import com.softdesign.devintensive.utils.ConstantManager;
 
 import java.util.ArrayList;

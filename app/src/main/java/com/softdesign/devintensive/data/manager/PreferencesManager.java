@@ -1,4 +1,4 @@
-package com.softdesign.devintensive.managers;
+package com.softdesign.devintensive.data.manager;
 
 import android.content.SharedPreferences;
 
