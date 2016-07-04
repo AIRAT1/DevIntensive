@@ -223,4 +223,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
         mDataManager.getPreferencesManager().saveUserProfileData(userData);
     }
+    private void loadPhotoFromGallery() {
+
+    }
+    private void loadFromCamera() {
+
+    }
 }
