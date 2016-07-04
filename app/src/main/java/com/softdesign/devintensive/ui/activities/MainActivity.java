@@ -1,5 +1,6 @@
 package com.softdesign.devintensive.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
@@ -193,6 +194,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }
         });
     }
+
+    /**
+     * Получение результата из другой активности (фото из камеры или из галереи).
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     private void changeEditMode(int mode) {
         if (mode == 1) {
             mFab.setImageResource(R.drawable.ic_done_black_24dp);
