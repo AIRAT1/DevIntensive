@@ -23,4 +23,6 @@
     <dimen name="spacing_large_tablet_96">96dp</dimen>
     <dimen name="spacing_largest_tablet_104">104dp</dimen>
     <dimen name="line_size">2dp</dimen>
+    <dimen name="profile_image_size_256">256dp</dimen>
+    <dimen name="fab_right_space">16dp</dimen>
 </resources>
