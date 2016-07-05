@@ -18,4 +18,8 @@
         cupiditat non proident, sunt in culpa qui officia
         deserunt mollit anim id est laborum.</string>
     <string name="user_profile_placeholder_image">Изменить фотографию профиля</string>
+    <string name="user_profile_dialog_gallery">Загрузить из галереи</string>
+    <string name="user_profile_dialog_camera">Сделать снимок</string>
+    <string name="user_profile_dialog_cancel">Отмена</string>
+    <string name="user_profile_dialog_title">Изменить фотографию профиля</string>
 </resources>
