@@ -30,6 +30,7 @@ import android.widget.RelativeLayout;
 import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.manager.DataManager;
 import com.softdesign.devintensive.utils.ConstantManager;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,6 +58,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private AppBarLayout mAppBarLayout;
     private File mPhotoFile = null;
     private Uri mSelectedImage = null;
+    private ImageView mProfileImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +74,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mProfilePlaceholder = (RelativeLayout)findViewById(R.id.profile_placeholder);
         mCollapsingToolbar = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
         mAppBarLayout = (AppBarLayout)findViewById(R.id.appbar_layout);
+        mProfileImage = (ImageView)findViewById(R.id.user_photo_img);
 
         mUserPhone = (EditText)findViewById(R.id.phone_et);
         mUserMail = (EditText)findViewById(R.id.email_et);
@@ -92,6 +95,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         setupToolbar();
         setupDraver();
         loadUserInfoValue();
+        Picasso.with(this)
+                .load(mDataManager.getPreferencesManager().loadUserPhoto())
+                .into(mProfileImage);
 
 //        List<String> test = mDataManager.getPreferencesManager().loadUserProfileData();
 
@@ -244,7 +250,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case ConstantManager.REQUEST_CAMERA_PICTURE:
                 if (resultCode == RESULT_OK && mPhotoFile != null){
-
+                    mSelectedImage = Uri.fromFile(mPhotoFile);
+                    insertProfileImage(mSelectedImage);
                 }
         }
     }
@@ -303,7 +310,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             // todo обработать ошибку
         }
         if (mPhotoFile != null) {
-            // todo передать фотофайл в интент
             takeCaptureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
             startActivityForResult(takeCaptureIntent, ConstantManager.REQUEST_CAMERA_PICTURE);
         }
@@ -338,17 +344,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                             public void onClick(DialogInterface dialog, int choiceItem) {
                                 switch (choiceItem) {
                                     case 0:
-                                        //todo загрузить из галереи
                                         loadPhotoFromGallery();
                                         showSnackbar("Загрузить из галлереи");
                                         break;
                                     case 1:
-                                        //todo загрузить из камеры
                                         loadPhotoFromCamera();
                                         showSnackbar("Загрузить из камеры");
                                         break;
                                     case 2:
-                                        //todo отменить
                                         dialog.cancel();
                                         showSnackbar("Отменить");
                                         break;
@@ -371,6 +374,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         return image;
     }
     private void insertProfileImage(Uri selectedImage) {
-
+        Picasso.with(this)
+                .load(selectedImage)
+                .into(mProfileImage);
+        mDataManager.getPreferencesManager().saveUserPhoto(selectedImage);
     }
 }
