@@ -7,5 +7,7 @@ public class ConstantManager {
     public final static String USER_VK_KEY = "USER_3_KEY";
     public final static String USER_GIT_KEY = "USER_4_KEY";
     public final static String USER_ABOUT_KEY = "USER_5_KEY";
-    public static final int LOAD_PROFILE_PHOTO = 100;
+    public static final int LOAD_PROFILE_PHOTO = 1;
+    public static final int REQUEST_CAMERA_PICTURE = 2;
+    public static final int REQUEST_GALLERY_PICTURE = 3;
 }

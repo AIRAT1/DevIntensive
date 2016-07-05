@@ -4,9 +4,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -53,6 +55,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private CollapsingToolbarLayout mCollapsingToolbar;
     private AppBarLayout.LayoutParams mAppBarParams = null;
     private AppBarLayout mAppBarLayout;
+    private File mPhotoFile = null;
+    private Uri mSelectedImage = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -231,7 +235,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case ConstantManager.REQUEST_GALLERY_PICTURE:
+                if (resultCode == RESULT_OK && data != null) {
+                    mSelectedImage = data.getData();
+                    insertProfileImage(mSelectedImage);
+                }
+                break;
+            case ConstantManager.REQUEST_CAMERA_PICTURE:
+                if (resultCode == RESULT_OK && mPhotoFile != null){
+
+                }
+        }
     }
 
     private void changeEditMode(int mode) {
@@ -258,6 +273,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }
         }
     }
+
     private void loadUserInfoValue() {
         List<String> userData = mDataManager.getPreferencesManager().loadUserProfileData();
         for (int i = 0; i < userData.size(); i++) {
@@ -272,18 +288,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mDataManager.getPreferencesManager().saveUserProfileData(userData);
     }
     private void loadPhotoFromGallery() {
-
+        Intent takeGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        takeGalleryIntent.setType("image/*");
+        startActivityForResult(Intent.createChooser(takeGalleryIntent, getString(R.string.user_profile_choise_message)),
+                ConstantManager.REQUEST_GALLERY_PICTURE);
     }
     private void loadPhotoFromCamera() {
-        File photoFile = null;
+
+        Intent takeCaptureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
-            photoFile = createImageFile();
+            mPhotoFile = createImageFile();
         } catch (IOException e) {
             e.printStackTrace();
             // todo обработать ошибку
         }
-        if (photoFile != null) {
+        if (mPhotoFile != null) {
             // todo передать фотофайл в интент
+            takeCaptureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
+            startActivityForResult(takeCaptureIntent, ConstantManager.REQUEST_CAMERA_PICTURE);
         }
     }
     private void hideProfilePlaceholder() {
@@ -302,7 +324,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
         mCollapsingToolbar.setLayoutParams(mAppBarParams);
     }
-
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
@@ -341,11 +362,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                         return null;
         }
     }
+
     private File createImageFile() throws IOException{
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(imageFileName, ".jpg", storageDir);
         return image;
+    }
+    private void insertProfileImage(Uri selectedImage) {
+
     }
 }
