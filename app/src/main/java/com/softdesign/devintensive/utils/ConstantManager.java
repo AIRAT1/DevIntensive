@@ -11,4 +11,6 @@ public class ConstantManager {
     public static final int LOAD_PROFILE_PHOTO = 1;
     public static final int REQUEST_CAMERA_PICTURE = 2;
     public static final int REQUEST_GALLERY_PICTURE = 3;
+    public static final int PERMISSION_REQUEST_SETTINGS_CODE = 4;
+    public static final int CAMERA_REQUEST_PERMISSION_CODE = 5;
 }
