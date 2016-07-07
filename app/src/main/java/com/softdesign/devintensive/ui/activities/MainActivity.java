@@ -2,6 +2,7 @@ package com.softdesign.devintensive.ui.activities;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,7 +52,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private DataManager mDataManager;
     private int mCurrentEditMode = 0;
 
-    private ImageView mCallImg;
+    private ImageView mCallImg, mSendEmailImg, mShowVkImg, mShowGithubImg;
     private CoordinatorLayout mCoordinatorLayout;
     private Toolbar mToolbar;
     private DrawerLayout mNavigationDrawer;
@@ -73,6 +74,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         mDataManager = DataManager.getInstance();
         mCallImg = (ImageView)findViewById(R.id.call_img);
+        mSendEmailImg = (ImageView)findViewById(R.id.send_email_img);
+        mShowVkImg = (ImageView)findViewById(R.id.show_vk);
+        mShowGithubImg = (ImageView)findViewById(R.id.show_github);
         mCoordinatorLayout = (CoordinatorLayout)findViewById(R.id.main_Coordinator_container);
         mNavigationDrawer = (DrawerLayout)findViewById(R.id.navigation_drawer);
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -97,6 +101,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         mFab.setOnClickListener(this);
         mProfilePlaceholder.setOnClickListener(this);
+        mCallImg.setOnClickListener(this);
+        mSendEmailImg.setOnClickListener(this);
+        mShowVkImg.setOnClickListener(this);
+        mShowGithubImg.setOnClickListener(this);
 
         setupToolbar();
         setupDraver();
@@ -109,7 +117,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 //        List<String> test = mDataManager.getPreferencesManager().loadUserProfileData();
 
 
-        mCallImg.setOnClickListener(this);
         if (savedInstanceState == null) {
 //            showSnackbar("Активити запускается впервые");
         }else {
@@ -197,6 +204,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     }).show();
                 }
                 break;
+            case R.id.send_email_img:
+                Intent sendIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", mUserMail.getText().toString(), null));
+                try {
+                    startActivity(Intent.createChooser(sendIntent, "Email message goes here"));
+                }catch (ActivityNotFoundException e) {
+                    showSnackbar("There is no email client installed.");
+                }
+                break;
+            case R.id.show_vk:
+                Intent showVkIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www." + mUserVk.getText().toString()));
+                startActivity(showVkIntent);
+                break;
+            case R.id.show_github:
+                Intent showGithub = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www." + mUserGit.getText().toString()));
+                startActivity(showGithub);
             case R.id.fab:
                 if (mCurrentEditMode == 0) {
                     changeEditMode(1);
@@ -208,7 +230,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 }
                 break;
             case R.id.profile_placeholder:
-                // todo сделать выбор откуда загружать фото
                 showDialog(ConstantManager.LOAD_PROFILE_PHOTO);
                 break;
             default:
@@ -348,12 +369,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == ConstantManager.CAMERA_REQUEST_PERMISSION_CODE && grantResults.length == 2) {
+        if (requestCode == ConstantManager.CAMERA_REQUEST_PERMISSION_CODE && grantResults.length == 3) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //// TODO: 06.07.2016  
             }
             if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 //// TODO: 06.07.2016
+            }
+            if (grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+                //// TODO: 07.07.2016
             }
         }
     }
