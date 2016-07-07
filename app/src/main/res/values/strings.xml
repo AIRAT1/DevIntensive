@@ -23,4 +23,8 @@
     <string name="user_profile_dialog_cancel">Отмена</string>
     <string name="user_profile_dialog_title">Изменить фотографию профиля</string>
     <string name="user_profile_choise_message">Выберите фото</string>
+    <string name="enter_correct_phone_number">Введите номер длиной от 11 до 20 символов</string>
+    <string name="enter_correct_email">Введите корректную почту</string>
+    <string name="enter_correct_vk_address">Корректное значение должно начинаться с \"vk.com/\"</string>
+    <string name="enter_correct_github_address">Корректное значение должно начинаться с \"github.com/\"</string>
 </resources>

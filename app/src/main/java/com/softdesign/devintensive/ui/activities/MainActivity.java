@@ -29,8 +29,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -103,7 +105,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mUserAbout = (EditText)findViewById(R.id.about_et);
 
         mUserPhone.addTextChangedListener(new MyTextWatcher(mUserPhone));
-        // // TODO: 07.07.2016  
+        mUserMail.addTextChangedListener(new MyTextWatcher(mUserMail));
+        mUserVk.addTextChangedListener(new MyTextWatcher(mUserVk));
+        mUserGit.addTextChangedListener(new MyTextWatcher(mUserGit));
+        mUserAbout.addTextChangedListener(new MyTextWatcher(mUserAbout));
 
         mUserInfoViews = new ArrayList<>();
         mUserInfoViews.add(mUserPhone);
@@ -125,9 +130,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         Picasso.with(this)
                 .load(mDataManager.getPreferencesManager().loadUserPhoto())
                 .placeholder(R.drawable.user_bg) //todo сделать placeholder + transform + crop
+                .fit()
                 .into(mProfileImage);
-
-//        List<String> test = mDataManager.getPreferencesManager().loadUserProfileData();
 
 
         if (savedInstanceState == null) {
@@ -237,13 +241,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     changeEditMode(1);
                     mCurrentEditMode = 1;
                 }else {
-                    if(!validatePhone()) return;
-                    if(!validateEmail()) return;
-                    if (!validateVk()) return;
-                    if (!validateGithub()) return;
-                    saveUserInfoValue();
-                    changeEditMode(0);
-                    mCurrentEditMode = 0;
+                    submitForm();
                 }
                 break;
             case R.id.profile_placeholder:
@@ -254,9 +252,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
-    private boolean validatePhone() {
-        if (mUserPhone.getText().toString().trim().isEmpty()) {
-            mInputLayoutPhone.setError("Введите корректное значение");
+    private void submitForm() {
+        if(!validatePhone()) return;
+        if(!validateEmail()) return;
+        if (!validateVk()) return;
+        if (!validateGithub()) return;
+        saveUserInfoValue();
+        changeEditMode(0);
+        mCurrentEditMode = 0;
+    }
+
+    public boolean validatePhone() {
+        String phone = (mUserPhone.getText().toString().trim());
+        if (phone.isEmpty() || phone.length() < 11 || phone.length() > 20) {
+            mInputLayoutPhone.setError(getString(R.string.enter_correct_phone_number));
             requestFocus(mUserPhone);
             return false;
         }else {
@@ -266,15 +275,50 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private boolean validateEmail() {
-        return false;
+        String email = mUserMail.getText().toString().trim();
+        String[] emailArray = email.split("@");
+        String[] emailArrayPostFix = emailArray[1].split("\\.");
+
+        if (email.isEmpty() || !isValidEmail(email)
+                || emailArray[0].length() < 3
+                || emailArrayPostFix[0].length() < 2 || emailArrayPostFix[1].length() < 2
+                )
+        {
+            mInputLayoutEmail.setError(getString(R.string.enter_correct_email));
+            requestFocus(mUserMail);
+            return false;
+        }else {
+            mInputLayoutEmail.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean validateVk() {
-        return false;
+        String vk = (mUserVk.getText().toString().trim());
+        if (vk.isEmpty() || !vk.startsWith("vk.com/")) {
+            mInputLayoutVk.setError(getString(R.string.enter_correct_vk_address));
+            requestFocus(mUserVk);
+            return false;
+        }else {
+            mInputLayoutVk.setErrorEnabled(false);
+        }
+        return true;
     }
 
     private boolean validateGithub() {
-        return false;
+        String github = mUserGit.getText().toString().trim();
+        if (github.isEmpty() || !github.startsWith("github.com/")) {
+            mInputLayoutGithub.setError(getString(R.string.enter_correct_github_address));
+            requestFocus(mUserGit);
+            return false;
+        }else {
+            mInputLayoutGithub.setErrorEnabled(false);
+        }
+        return true;
     }
 
     private void requestFocus(View view) {
@@ -513,10 +557,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         public MyTextWatcher(View view) {
             this.view = view;
         }
-
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            
+
         }
 
         @Override
@@ -526,7 +569,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         @Override
         public void afterTextChanged(Editable s) {
-            // // TODO: 07.07.2016  
+            switch (view.getId()) {
+                case R.id.phone_et:
+                    validatePhone();
+                    break;
+                case R.id.email_et:
+                    validateEmail();
+                    break;
+                case R.id.vk_et:
+                    validateVk();
+                    break;
+                case R.id.github_et:
+                    validateGithub();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
