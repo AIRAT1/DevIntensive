@@ -20,6 +20,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -27,9 +28,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -66,6 +70,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private File mPhotoFile = null;
     private Uri mSelectedImage = null;
     private ImageView mProfileImage;
+    private TextInputLayout mInputLayoutPhone, mInputLayoutEmail, mInputLayoutVk, mInputLayoutGithub;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,11 +91,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mAppBarLayout = (AppBarLayout)findViewById(R.id.appbar_layout);
         mProfileImage = (ImageView)findViewById(R.id.user_photo_img);
 
+        mInputLayoutPhone = (TextInputLayout)findViewById(R.id.inputLayoutPhone);
+        mInputLayoutEmail = (TextInputLayout)findViewById(R.id.inputLayoutEmail);
+        mInputLayoutVk = (TextInputLayout)findViewById(R.id.inputLayoutVk);
+        mInputLayoutGithub = (TextInputLayout)findViewById(R.id.inputLayiutGithub);
+
         mUserPhone = (EditText)findViewById(R.id.phone_et);
         mUserMail = (EditText)findViewById(R.id.email_et);
         mUserVk = (EditText)findViewById(R.id.vk_et);
         mUserGit = (EditText)findViewById(R.id.github_et);
         mUserAbout = (EditText)findViewById(R.id.about_et);
+
+        mUserPhone.addTextChangedListener(new MyTextWatcher(mUserPhone));
+        // // TODO: 07.07.2016  
 
         mUserInfoViews = new ArrayList<>();
         mUserInfoViews.add(mUserPhone);
@@ -224,10 +237,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     changeEditMode(1);
                     mCurrentEditMode = 1;
                 }else {
-//                    if(!validatePhone) return;
-//                    if(!validateEmail) return;
-//                    if (!validateVk) return;
-//                    if (!validateGithub) return;
+                    if(!validatePhone()) return;
+                    if(!validateEmail()) return;
+                    if (!validateVk()) return;
+                    if (!validateGithub()) return;
                     saveUserInfoValue();
                     changeEditMode(0);
                     mCurrentEditMode = 0;
@@ -238,6 +251,35 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 break;
             default:
                 break;
+        }
+    }
+
+    private boolean validatePhone() {
+        if (mUserPhone.getText().toString().trim().isEmpty()) {
+            mInputLayoutPhone.setError("Введите корректное значение");
+            requestFocus(mUserPhone);
+            return false;
+        }else {
+            mInputLayoutPhone.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateEmail() {
+        return false;
+    }
+
+    private boolean validateVk() {
+        return false;
+    }
+
+    private boolean validateGithub() {
+        return false;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
 
@@ -464,5 +506,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         Intent appSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                 Uri.parse("package:" + getPackageName()));
         startActivityForResult(appSettingsIntent, ConstantManager.PERMISSION_REQUEST_SETTINGS_CODE);
+    }
+    private class MyTextWatcher implements TextWatcher {
+        private View view;
+
+        public MyTextWatcher(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            // // TODO: 07.07.2016  
+        }
     }
 }
