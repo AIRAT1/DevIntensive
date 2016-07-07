@@ -224,6 +224,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     changeEditMode(1);
                     mCurrentEditMode = 1;
                 }else {
+//                    if(!validatePhone) return;
+//                    if(!validateEmail) return;
+//                    if (!validateVk) return;
+//                    if (!validateGithub) return;
                     saveUserInfoValue();
                     changeEditMode(0);
                     mCurrentEditMode = 0;
@@ -297,6 +301,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 userValue.setEnabled(true);
                 userValue.setFocusable(true);
                 userValue.setFocusableInTouchMode(true);
+
+                mUserPhone.requestFocus();
+                mUserPhone.requestFocusFromTouch();
+                mUserPhone.setSelection(mUserPhone.getText().length());
+
                 showProfilePlaceholder();
                 lockToolbar();
                 mCollapsingToolbar.setExpandedTitleColor(Color.TRANSPARENT);
