@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -104,7 +103,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         loadUserInfoValue();
         Picasso.with(this)
                 .load(mDataManager.getPreferencesManager().loadUserPhoto())
-                .placeholder(R.drawable.germany) //todo сделать placeholder + transform + crop
+                .placeholder(R.drawable.user_bg) //todo сделать placeholder + transform + crop
                 .into(mProfileImage);
 
 //        List<String> test = mDataManager.getPreferencesManager().loadUserProfileData();
@@ -175,22 +174,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
-    private void runWithDelay() {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                hideProgress();
-            }
-        }, 5000);
-    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.call_img:
-                showProgress();
-                runWithDelay();
+                if ((ContextCompat.checkSelfPermission(
+                        this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED)) {
+                    Intent dialIntent = new Intent(Intent.ACTION_CALL,
+                            Uri.parse("tel:" + mUserPhone.getText().toString()));
+                    startActivity(dialIntent);
+                }else {
+                    ActivityCompat.requestPermissions(this, new String[]{
+                            Manifest.permission.CALL_PHONE
+                    }, ConstantManager.CALL_REQUEST_PERMISSION_CODE);
+                    Snackbar.make(mCoordinatorLayout, "Для корректной работы необходимо дать требуемые разрешения",
+                            Snackbar.LENGTH_LONG).setAction("Разрешить", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            openApplicationSettings();
+                        }
+                    }).show();
+                }
                 break;
             case R.id.fab:
                 if (mCurrentEditMode == 0) {
@@ -384,15 +389,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                                 switch (choiceItem) {
                                     case 0:
                                         loadPhotoFromGallery();
-//                                        showSnackbar("Загрузить из галлереи");
                                         break;
                                     case 1:
                                         loadPhotoFromCamera();
-//                                        showSnackbar("Загрузить из камеры");
                                         break;
                                     case 2:
                                         dialog.cancel();
-//                                        showSnackbar("Отменить");
                                         break;
                                     default:
                                         break;

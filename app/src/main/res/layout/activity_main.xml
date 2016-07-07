@@ -33,7 +33,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/profile_image_size_256"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/germany"/>
+                        android:src="@drawable/user_bg"/>
                     <RelativeLayout
                         android:id="@+id/profile_placeholder"
                         android:layout_width="match_parent"
