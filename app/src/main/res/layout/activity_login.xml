@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/login_bg"
     android:gravity="center"
     android:paddingBottom="@dimen/spacing_medium_32"
@@ -11,6 +12,7 @@
     android:paddingRight="@dimen/spacing_medium_32"
     tools:context="com.softdesign.devintensive.ui.activities.LoginActivity">
     <LinearLayout
+        android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#f9f9f9"
@@ -22,6 +24,7 @@
         android:elevation="@dimen/spacing_normal_16">
 
         <RelativeLayout
+            android:id="@+id/relative_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -103,5 +106,16 @@
             android:text="@string/forgot_password"
             android:textColor="@color/gray_light"/>
     </LinearLayout>
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        app:backgroundTint="@color/red_solid"
+        android:src="@drawable/ic_add_black_24dp"
+        android:clickable="true"
+        app:fabSize="normal"
+        app:elevation="24dp"
+        android:layout_marginTop="@dimen/spacing_medium_32"/>
 </RelativeLayout>
