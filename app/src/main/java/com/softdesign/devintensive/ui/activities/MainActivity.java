@@ -130,6 +130,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         Picasso.with(this)
                 .load(mDataManager.getPreferencesManager().loadUserPhoto())
                 .placeholder(R.drawable.user_bg) //todo сделать placeholder + transform + crop
+                .error(R.drawable.user_bg)
                 .fit()
                 .into(mProfileImage);
 
@@ -267,6 +268,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         if (phone.isEmpty() || phone.length() < 11 || phone.length() > 20) {
             mInputLayoutPhone.setError(getString(R.string.enter_correct_phone_number));
             requestFocus(mUserPhone);
+            showSnackbar(getString(R.string.enter_correct_phone_number));
             return false;
         }else {
             mInputLayoutPhone.setErrorEnabled(false);
@@ -286,6 +288,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         {
             mInputLayoutEmail.setError(getString(R.string.enter_correct_email));
             requestFocus(mUserMail);
+            showSnackbar(getString(R.string.enter_correct_email));
             return false;
         }else {
             mInputLayoutEmail.setErrorEnabled(false);
@@ -302,6 +305,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         if (vk.isEmpty() || !vk.startsWith("vk.com/")) {
             mInputLayoutVk.setError(getString(R.string.enter_correct_vk_address));
             requestFocus(mUserVk);
+            showSnackbar(getString(R.string.enter_correct_vk_address));
             return false;
         }else {
             mInputLayoutVk.setErrorEnabled(false);
@@ -314,6 +318,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         if (github.isEmpty() || !github.startsWith("github.com/")) {
             mInputLayoutGithub.setError(getString(R.string.enter_correct_github_address));
             requestFocus(mUserGit);
+            showSnackbar(getString(R.string.enter_correct_github_address));
             return false;
         }else {
             mInputLayoutGithub.setErrorEnabled(false);
@@ -387,6 +392,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 userValue.setEnabled(true);
                 userValue.setFocusable(true);
                 userValue.setFocusableInTouchMode(true);
+            }
 
                 mUserPhone.requestFocus();
                 mUserPhone.requestFocusFromTouch();
@@ -395,18 +401,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 showProfilePlaceholder();
                 lockToolbar();
                 mCollapsingToolbar.setExpandedTitleColor(Color.TRANSPARENT);
-            }
+
         }else {
             mFab.setImageResource(R.drawable.ic_create_black_24dp);
             for (EditText userValue : mUserInfoViews) {
                 userValue.setEnabled(false);
                 userValue.setFocusable(false);
                 userValue.setFocusableInTouchMode(false);
+            }
                 hideProfilePlaceholder();
                 unlockToolbar();
                 mCollapsingToolbar.setExpandedTitleColor(getResources().getColor(R.color.white));
                 saveUserInfoValue();
-            }
+
         }
     }
 
@@ -466,13 +473,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == ConstantManager.CAMERA_REQUEST_PERMISSION_CODE && grantResults.length == 3) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //// TODO: 06.07.2016  
+                showSnackbar("Разрешение на камеру полученно");
             }
             if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                //// TODO: 06.07.2016
+                showSnackbar("Разрешение на сохранение полученно");
             }
             if (grantResults[2] == PackageManager.PERMISSION_GRANTED) {
-                //// TODO: 07.07.2016
+                showSnackbar("Разрешение на звонок полученно");
             }
         }
     }
@@ -542,6 +549,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private void insertProfileImage(Uri selectedImage) {
         Picasso.with(this)
                 .load(selectedImage)
+                .placeholder(R.drawable.user_bg)
+                .error(R.drawable.user_bg)
                 .into(mProfileImage);
         // todo сделать placeholder + transform + crop
         mDataManager.getPreferencesManager().saveUserPhoto(selectedImage);
