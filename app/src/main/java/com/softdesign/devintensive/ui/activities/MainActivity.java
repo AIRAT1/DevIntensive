@@ -73,6 +73,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private Uri mSelectedImage = null;
     private ImageView mProfileImage;
     private TextInputLayout mInputLayoutPhone, mInputLayoutEmail, mInputLayoutVk, mInputLayoutGithub;
+
+    /**
+     * bind values
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,18 +149,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
+    /**
+     * start activity
+     */
     @Override
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart");
     }
 
+    /**
+     * start activity after pause
+     */
     @Override
     protected void onRestart() {
         super.onRestart();
         Log.d(TAG, "onRestart");
     }
 
+    /**
+     * activity is visible now
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -163,6 +177,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         loadUserInfoValue();
     }
 
+    /**
+     * pause with activity
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -170,26 +187,45 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         saveUserInfoValue();
     }
 
+    /**
+     * activity is stop
+     */
     @Override
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop");
     }
 
+    /**
+     * activity is destroyed
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
     }
 
+    /**
+     * save instance state
+     * @param outState
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(ConstantManager.EDIT_MODE_KEY, mCurrentEditMode);
     }
+
+    /**
+     * show snackbar with message
+     * @param message
+     */
     private void showSnackbar(String message) {
         Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_LONG).show();
     }
+
+    /**
+     * setup toolbar
+     */
     private void setupToolbar() {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -200,6 +236,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
+    /**
+     * on pressed listener
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -253,6 +293,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
+    /**
+     * check forms
+     */
     private void submitForm() {
         if(!validatePhone()) return;
         if(!validateEmail()) return;
@@ -263,6 +306,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mCurrentEditMode = 0;
     }
 
+    /**
+     * check phone number
+     * @return
+     */
     public boolean validatePhone() {
         String phone = (mUserPhone.getText().toString().trim());
         if (phone.isEmpty() || phone.length() < 11 || phone.length() > 20) {
@@ -276,6 +323,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         return true;
     }
 
+    /**
+     * check email
+     * @return
+     */
     private boolean validateEmail() {
         String email = mUserMail.getText().toString().trim();
         String[] emailArray = email.split("@");
@@ -296,10 +347,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         return true;
     }
 
+    /**
+     * check email with pattern
+     * @param email
+     * @return
+     */
     private boolean isValidEmail(String email) {
         return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+    /**
+     * check vk field
+     * @return
+     */
     private boolean validateVk() {
         String vk = (mUserVk.getText().toString().trim());
         if (vk.isEmpty() || !vk.startsWith("vk.com/")) {
@@ -313,6 +373,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         return true;
     }
 
+    /**
+     * check github field
+     * @return
+     */
     private boolean validateGithub() {
         String github = mUserGit.getText().toString().trim();
         if (github.isEmpty() || !github.startsWith("github.com/")) {
@@ -326,12 +390,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         return true;
     }
 
+    /**
+     * set request focus on view
+     * @param view
+     */
     private void requestFocus(View view) {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
 
+    /**
+     * check what of menu item was selected
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -340,6 +413,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * check back button was pressed
+     */
     @Override
     public void onBackPressed() {
         if (mNavigationDrawer.isDrawerOpen(GravityCompat.START)) {
@@ -349,6 +425,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
+    /**
+     * setup navigation drawer
+     */
     private void setupDraver() {
         NavigationView navigationView = (NavigationView)findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -385,6 +464,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
+    /**
+     * change edit mode
+     * @param mode
+     */
     private void changeEditMode(int mode) {
         if (mode == 1) {
             mFab.setImageResource(R.drawable.ic_done_black_24dp);
@@ -417,12 +500,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
+    /**
+     * load data from preferences
+     */
     private void loadUserInfoValue() {
         List<String> userData = mDataManager.getPreferencesManager().loadUserProfileData();
         for (int i = 0; i < userData.size(); i++) {
             mUserInfoViews.get(i).setText(userData.get(i));
         }
     }
+
+    /**
+     * save data in preferences
+     */
     private void saveUserInfoValue() {
         List<String> userData = new ArrayList<>();
         for (EditText userFieldView : mUserInfoViews) {
@@ -430,12 +520,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
         mDataManager.getPreferencesManager().saveUserProfileData(userData);
     }
+
+    /**
+     * load photo from gallery
+     */
     private void loadPhotoFromGallery() {
         Intent takeGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         takeGalleryIntent.setType("image/*");
         startActivityForResult(Intent.createChooser(takeGalleryIntent, getString(R.string.user_profile_choise_message)),
                 ConstantManager.REQUEST_GALLERY_PICTURE);
     }
+
+    /**
+     * load photo from camera
+     */
     private void loadPhotoFromCamera() {
         if
                 (ContextCompat.checkSelfPermission(
@@ -469,6 +567,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
+    /**
+     * result from permissions request
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == ConstantManager.CAMERA_REQUEST_PERMISSION_CODE && grantResults.length == 3) {
@@ -484,22 +588,43 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
+    /**
+     * hide placeholder
+     */
     private void hideProfilePlaceholder() {
         mProfilePlaceholder.setVisibility(View.GONE);
     }
+
+    /**
+     * show placeholder
+     */
     private void showProfilePlaceholder() {
         mProfilePlaceholder.setVisibility(View.VISIBLE);
     }
+
+    /**
+     * lock toolbar
+     */
     private void lockToolbar() {
         mAppBarLayout.setExpanded(true, true);
         mAppBarParams.setScrollFlags(0);
         mCollapsingToolbar.setLayoutParams(mAppBarParams);
     }
+
+    /**
+     * unlock toolbar
+     */
     private void unlockToolbar() {
         mAppBarParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|
                 AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
         mCollapsingToolbar.setLayoutParams(mAppBarParams);
     }
+
+    /**
+     * create dialog
+     * @param id
+     * @return
+     */
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
@@ -533,6 +658,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
+    /**
+     * create image file
+     * @return
+     * @throws IOException
+     */
     private File createImageFile() throws IOException{
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
@@ -546,6 +676,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         return image;
     }
+
+    /**
+     * insert photo in view and save
+     * @param selectedImage
+     */
     private void insertProfileImage(Uri selectedImage) {
         Picasso.with(this)
                 .load(selectedImage)
@@ -555,14 +690,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         // todo сделать placeholder + transform + crop
         mDataManager.getPreferencesManager().saveUserPhoto(selectedImage);
     }
+
+    /**
+     * start with application settings
+     */
     public void openApplicationSettings() {
         Intent appSettingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                 Uri.parse("package:" + getPackageName()));
         startActivityForResult(appSettingsIntent, ConstantManager.PERMISSION_REQUEST_SETTINGS_CODE);
     }
+
+    /**
+     * private class for watching text changes
+     */
     private class MyTextWatcher implements TextWatcher {
         private View view;
 
+        /**
+         * constructor
+         * @param view
+         */
         public MyTextWatcher(View view) {
             this.view = view;
         }
@@ -576,6 +723,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         }
 
+        /**
+         * after text changed listener
+         * @param s
+         */
         @Override
         public void afterTextChanged(Editable s) {
             switch (view.getId()) {

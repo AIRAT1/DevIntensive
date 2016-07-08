@@ -114,6 +114,7 @@
         android:layout_alignParentEnd="true"
         app:backgroundTint="@color/red_solid"
         android:src="@drawable/ic_add_black_24dp"
+        android:onClick="fabOnClick"
         android:clickable="true"
         app:fabSize="normal"
         app:elevation="24dp"

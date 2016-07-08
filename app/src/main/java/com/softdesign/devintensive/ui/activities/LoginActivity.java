@@ -12,12 +12,16 @@ import android.widget.Toast;
 
 import com.softdesign.devintensive.R;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity {
     private Button mBtnlogin;
     private FloatingActionButton mFab;
     private TextInputLayout mInputLayoutLoginEmail, mInputLayoutLoginPassword;
     private EditText mLoginEmailEt, mLoginPasswordEt;
 
+    /**
+     * bind values
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,17 +33,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mLoginEmailEt = (EditText)findViewById(R.id.login_email_et);
         mLoginPasswordEt = (EditText)findViewById(R.id.login_password_et);
 
-        mBtnlogin.setOnClickListener(this);
+        mBtnlogin.setOnClickListener(new View.OnClickListener() {
+            /**
+             * make action
+             * @param v
+             */
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_login:
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                break;
-            case R.id.fab:
-                Toast.makeText(LoginActivity.this, "fab is pressed", Toast.LENGTH_SHORT).show();
-        }
+    /**
+     * make toast when fab is clicked
+     * @param view
+     */
+    public void fabOnClick(View view) {
+        Toast.makeText(LoginActivity.this, "fab onClick", Toast.LENGTH_SHORT).show();
     }
 }
