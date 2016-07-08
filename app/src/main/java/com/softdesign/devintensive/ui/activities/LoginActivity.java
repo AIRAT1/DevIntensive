@@ -8,10 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.softdesign.devintensive.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private Button mBtnlogin;
     private FloatingActionButton mFab;
     private TextInputLayout mInputLayoutLoginEmail, mInputLayoutLoginPassword;
@@ -28,11 +29,17 @@ public class LoginActivity extends AppCompatActivity {
         mLoginEmailEt = (EditText)findViewById(R.id.login_email_et);
         mLoginPasswordEt = (EditText)findViewById(R.id.login_password_et);
 
-        mBtnlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mBtnlogin.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_login:
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            }
-        });
+                break;
+            case R.id.fab:
+                Toast.makeText(LoginActivity.this, "fab is pressed", Toast.LENGTH_SHORT).show();
+        }
     }
 }
