@@ -1,4 +1,8 @@
 <resources>
+    <!--Font Family-->
+    <string name="ff_regular">sans-serif</string>
+    <string name="ff_medium">sans-serif-medium</string>
+
     <string name="app_name">Хайруллин Айрат</string>
     <string name="mobile_number">Мобильный</string>
     <string name="e_mail">E-mail</string>
@@ -27,8 +31,11 @@
     <string name="enter_correct_email">Введите корректную почту</string>
     <string name="enter_correct_vk_address">Корректное значение должно начинаться с \"vk.com/\"</string>
     <string name="enter_correct_github_address">Корректное значение должно начинаться с \"github.com/\"</string>
-    <string name="login">ВОЙТИ</string>
-    <string name="password_hint">Пароль</string>
-    <string name="forgot_password">Забыли пароль?</string>
-    <string name="email_hint">E-mail</string>
+
+    <!--AuthActivity-->
+    <string name="auth.authorization_enter">Войти</string>
+    <string name="auth.email">Введите e-mail</string>
+    <string name="auth.password">Введите пароль</string>
+    <string name="auth.login">Войти</string>
+    <string name="auth.remember">Забыли пароль?</string>
 </resources>
