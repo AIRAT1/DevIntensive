@@ -17,4 +17,18 @@
         eu fugiat nulla pariatur. Excepteur sint obcaecat
         cupiditat non proident, sunt in culpa qui officia
         deserunt mollit anim id est laborum.</string>
+    <string name="user_profile_placeholder_image">Изменить фотографию профиля</string>
+    <string name="user_profile_dialog_gallery">Загрузить из галереи</string>
+    <string name="user_profile_dialog_camera">Сделать снимок</string>
+    <string name="user_profile_dialog_cancel">Отмена</string>
+    <string name="user_profile_dialog_title">Изменить фотографию профиля</string>
+    <string name="user_profile_choise_message">Выберите фото</string>
+    <string name="enter_correct_phone_number">Введите номер длиной от 11 до 20 символов</string>
+    <string name="enter_correct_email">Введите корректную почту</string>
+    <string name="enter_correct_vk_address">Корректное значение должно начинаться с \"vk.com/\"</string>
+    <string name="enter_correct_github_address">Корректное значение должно начинаться с \"github.com/\"</string>
+    <string name="login">ВОЙТИ</string>
+    <string name="password_hint">Пароль</string>
+    <string name="forgot_password">Забыли пароль?</string>
+    <string name="email_hint">E-mail</string>
 </resources>
