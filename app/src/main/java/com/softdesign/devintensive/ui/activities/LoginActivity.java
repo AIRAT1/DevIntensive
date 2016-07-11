@@ -45,7 +45,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_btn:
-                showSnackbar("Вход");
+                loginSuccess();
                 break;
             case R.id.remember_txt:
                 rememberPassword();
@@ -63,6 +63,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         startActivity(rememberIntent);
     }
     private void loginSuccess() {
-
+        showSnackbar("Вход");
     }
 }

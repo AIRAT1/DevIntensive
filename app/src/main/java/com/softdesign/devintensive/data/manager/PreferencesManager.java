@@ -44,4 +44,20 @@ public class PreferencesManager {
         return Uri.parse(mSharedPreferences.getString(ConstantManager.USER_PHOTO_KEY,
                 "android.resource://com.softdesign.devintensive/drawable/germany"));
     }
+    public void saveAuthToken(String authToken) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(ConstantManager.AUTH_TOKEN, authToken);
+        editor.apply();
+    }
+    public String getAuthToken() {
+        return mSharedPreferences.getString(ConstantManager.AUTH_TOKEN, "null");
+    }
+    public void saveUserId(String userId) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(ConstantManager.USER_ID_KEY, userId);
+        editor.apply();
+    }
+    public String getUserId() {
+        return mSharedPreferences.getString(ConstantManager.USER_ID_KEY, "null");
+    }
 }
