@@ -15,12 +15,13 @@ import com.softdesign.devintensive.R;
 import com.softdesign.devintensive.data.manager.DataManager;
 import com.softdesign.devintensive.data.network.req.UserLoginRec;
 import com.softdesign.devintensive.data.network.res.UserModelRes;
+import com.softdesign.devintensive.utils.NetworkStatusChecker;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AuthActivity extends BaseActivity implements View.OnClickListener{
+public class AuthActivity extends BaseActivity implements View.OnClickListener {
     private Button mSignIn;
     private TextView mRememberPassword;
     private TextInputLayout mWrapLoginEmail, mWrapLoginPassword;
@@ -30,6 +31,7 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener{
 
     /**
      * bind values
+     *
      * @param savedInstanceState
      */
     @Override
@@ -38,13 +40,13 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_login);
 
         mDataManager = DataManager.getInstance();
-        mSignIn = (Button)findViewById(R.id.login_btn);
-        mWrapLoginEmail = (TextInputLayout)findViewById(R.id.wrap_login_email);
-        mWrapLoginPassword = (TextInputLayout)findViewById(R.id.wrap_login_password);
-        mLogin = (EditText)findViewById(R.id.et_login_email);
-        mPassword = (EditText)findViewById(R.id.et_login_password);
-        mRememberPassword = (TextView)findViewById(R.id.remember_txt);
-        mCoordinatorLayout = (CoordinatorLayout)findViewById(R.id.main_Coordinator_container);
+        mSignIn = (Button) findViewById(R.id.login_btn);
+        mWrapLoginEmail = (TextInputLayout) findViewById(R.id.wrap_login_email);
+        mWrapLoginPassword = (TextInputLayout) findViewById(R.id.wrap_login_password);
+        mLogin = (EditText) findViewById(R.id.et_login_email);
+        mPassword = (EditText) findViewById(R.id.et_login_password);
+        mRememberPassword = (TextView) findViewById(R.id.remember_txt);
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_Coordinator_container);
 
         mSignIn.setOnClickListener(this);
         mRememberPassword.setOnClickListener(this);
@@ -63,35 +65,57 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener{
                 break;
         }
     }
+
     private void showSnackbar(String message) {
         Snackbar.make(mCoordinatorLayout, message, Snackbar.LENGTH_LONG).show();
     }
+
     private void rememberPassword() {
         Intent rememberIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("http://devintensive.softdesign-apps.ru/forgotpass"));
         startActivity(rememberIntent);
     }
-    private void loginSuccess(Response<UserModelRes> response) {
-        showSnackbar(response.body().getData().getToken());
-    }
-    private void signIn() {
-        Call<UserModelRes> call = mDataManager.loginUser(new UserLoginRec("email", "password"));
-        call.enqueue(new Callback<UserModelRes>() {
-            @Override
-            public void onResponse(Call<UserModelRes> call, Response<UserModelRes> response) {
-                if (response.code() == 200) {
-                    loginSuccess(response);
-                }else if (response.code() == 404) {
-                    showSnackbar("Не верный логин или пароль");
-                }else {
-                    showSnackbar("Всё пропало шеф!!!");
-                }
-            }
 
-            @Override
-            public void onFailure(Call<UserModelRes> call, Throwable t) {
-                // todo обработать ошибки ретрофита
-            }
-        });
+    private void loginSuccess(UserModelRes userModel) {
+        showSnackbar(userModel.getData().getToken());
+        mDataManager.getPreferencesManager().saveAuthToken(userModel.getData().getToken());
+        mDataManager.getPreferencesManager().saveUserId(userModel.getData().getUser().getId());
+        saveUserValues(userModel);
+
+        Intent loginIntent = new Intent(this, MainActivity.class);
+        startActivity(loginIntent);
+    }
+
+    private void signIn() {
+        if (NetworkStatusChecker.isNetworkAvailable(this)) {
+            Call<UserModelRes> call = mDataManager.loginUser(new UserLoginRec(mLogin.getText().toString(), mPassword.getText().toString()));
+            call.enqueue(new Callback<UserModelRes>() {
+                @Override
+                public void onResponse(Call<UserModelRes> call, Response<UserModelRes> response) {
+                    if (response.code() == 200) {
+                        loginSuccess(response.body());
+                    } else if (response.code() == 404) {
+                        showSnackbar("Не верный логин или пароль");
+                    } else {
+                        showSnackbar("Всё пропало шеф!!!");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<UserModelRes> call, Throwable t) {
+                    // todo обработать ошибки ретрофита
+                }
+            });
+        }else {
+            showSnackbar("Сеть на данный момент не доступна, попробуйте позже");
+        }
+    }
+    private void saveUserValues(UserModelRes userModel) {
+        int[] userValues = {
+                userModel.getData().getUser().getProfileValues().getRating(),
+                userModel.getData().getUser().getProfileValues().getLinesCode(),
+                userModel.getData().getUser().getProfileValues().getProjects()
+        };
+        mDataManager.getPreferencesManager().saveUserProfileValues(userValues);
     }
 }

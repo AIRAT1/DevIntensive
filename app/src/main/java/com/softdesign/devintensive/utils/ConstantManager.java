@@ -10,6 +10,9 @@ public class ConstantManager {
     public static final String USER_PHOTO_KEY = "USER_PHOTO_KEY";
     public static final String AUTH_TOKEN = "AUTH_TOKEN";
     public static final String USER_ID_KEY = "USER_ID_KEY";
+    public static final String USER_RATING_VALUE = "USER_RATING_VALUE";
+    public static final String USER_CODE_LINES_VALUE = "USER_CODE_LINES_VALUE";
+    public static final String USER_PROJECT_VALUE = "USER_PROJECT_VALUE";
 
     public static final int LOAD_PROFILE_PHOTO = 1;
     public static final int REQUEST_CAMERA_PICTURE = 2;

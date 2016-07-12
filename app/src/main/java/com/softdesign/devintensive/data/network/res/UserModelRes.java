@@ -143,6 +143,10 @@ public class UserModelRes {
         public String getToken() {
             return token;
         }
+
+        public User getUser() {
+            return user;
+        }
     }
     public class Contacts {
 
