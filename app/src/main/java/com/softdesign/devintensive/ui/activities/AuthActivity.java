@@ -12,13 +12,21 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.softdesign.devintensive.R;
+import com.softdesign.devintensive.data.manager.DataManager;
+import com.softdesign.devintensive.data.network.req.UserLoginRec;
+import com.softdesign.devintensive.data.network.res.UserModelRes;
 
-public class LoginActivity extends BaseActivity implements View.OnClickListener{
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class AuthActivity extends BaseActivity implements View.OnClickListener{
     private Button mSignIn;
     private TextView mRememberPassword;
     private TextInputLayout mWrapLoginEmail, mWrapLoginPassword;
     private EditText mLogin, mPassword;
     private CoordinatorLayout mCoordinatorLayout;
+    private DataManager mDataManager;
 
     /**
      * bind values
@@ -29,6 +37,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        mDataManager = DataManager.getInstance();
         mSignIn = (Button)findViewById(R.id.login_btn);
         mWrapLoginEmail = (TextInputLayout)findViewById(R.id.wrap_login_email);
         mWrapLoginPassword = (TextInputLayout)findViewById(R.id.wrap_login_password);
@@ -45,7 +54,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_btn:
-                loginSuccess();
+                signIn();
                 break;
             case R.id.remember_txt:
                 rememberPassword();
@@ -62,7 +71,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 Uri.parse("http://devintensive.softdesign-apps.ru/forgotpass"));
         startActivity(rememberIntent);
     }
-    private void loginSuccess() {
-        showSnackbar("Вход");
+    private void loginSuccess(Response<UserModelRes> response) {
+        showSnackbar(response.body().getData().getToken());
+    }
+    private void signIn() {
+        Call<UserModelRes> call = mDataManager.loginUser(new UserLoginRec("email", "password"));
+        call.enqueue(new Callback<UserModelRes>() {
+            @Override
+            public void onResponse(Call<UserModelRes> call, Response<UserModelRes> response) {
+                if (response.code() == 200) {
+                    loginSuccess(response);
+                }else if (response.code() == 404) {
+                    showSnackbar("Не верный логин или пароль");
+                }else {
+                    showSnackbar("Всё пропало шеф!!!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserModelRes> call, Throwable t) {
+                // todo обработать ошибки ретрофита
+            }
+        });
     }
 }
