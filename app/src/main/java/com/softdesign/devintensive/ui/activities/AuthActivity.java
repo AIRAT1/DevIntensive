@@ -17,6 +17,9 @@ import com.softdesign.devintensive.data.network.req.UserLoginRec;
 import com.softdesign.devintensive.data.network.res.UserModelRes;
 import com.softdesign.devintensive.utils.NetworkStatusChecker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,6 +84,9 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
         mDataManager.getPreferencesManager().saveAuthToken(userModel.getData().getToken());
         mDataManager.getPreferencesManager().saveUserId(userModel.getData().getUser().getId());
         saveUserValues(userModel);
+        saveUserPhotos(userModel);
+        saveUserFields(userModel);
+        saveUserFirstLastName(userModel);
 
         Intent loginIntent = new Intent(this, MainActivity.class);
         startActivity(loginIntent);
@@ -117,5 +123,26 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
                 userModel.getData().getUser().getProfileValues().getProjects()
         };
         mDataManager.getPreferencesManager().saveUserProfileValues(userValues);
+    }
+    private void saveUserPhotos(UserModelRes userModel) {
+        mDataManager.getPreferencesManager().saveUserPhoto(Uri.parse(userModel.getData().getUser().getPublicInfo().getPhoto()));
+        mDataManager.getPreferencesManager().saveUserAvatar(Uri.parse(userModel.getData().getUser().getPublicInfo().getAvatar()));
+    }
+    private void saveUserFields(UserModelRes userModel) {
+        List<String> userFields = new ArrayList<>();
+        userFields.add(userModel.getData().getUser().getContacts().getPhone());
+        userFields.add(userModel.getData().getUser().getContacts().getEmail());
+        String vk = userModel.getData().getUser().getContacts().getVk();
+        if (vk.startsWith("https://")) vk = vk.substring(8, vk.length());
+        userFields.add(vk);
+        String git = userModel.getData().getUser().getRepositories().getRepo().get(0).getGit();
+        if (git.startsWith("https://")) git = git.substring(8, git.length());
+        userFields.add(git);
+        userFields.add(userModel.getData().getUser().getPublicInfo().getBio());
+        mDataManager.getPreferencesManager().saveUserProfileData(userFields);
+    }
+    private void saveUserFirstLastName(UserModelRes userModel) {
+        mDataManager.getPreferencesManager().saveFirstLastName(userModel.getData().getUser().getFirstName(),
+                userModel.getData().getUser().getSecondName());
     }
 }

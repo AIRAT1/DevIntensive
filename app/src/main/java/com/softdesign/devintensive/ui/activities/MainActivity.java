@@ -145,6 +145,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         setupDraver();
         initUserFields();
         initUserInfoValue();
+        initPhotos();
+        initFirstLastName();
 
         Picasso.with(this)
                 .load(mDataManager.getPreferencesManager().loadUserPhoto())
@@ -539,6 +541,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         for (int i = 0; i < userData.size(); i++) {
             mUserValueViews.get(i).setText(userData.get(i));
         }
+    }
+    private void initPhotos() {
+
+    }
+    private void initFirstLastName() {
+
     }
 
     /**

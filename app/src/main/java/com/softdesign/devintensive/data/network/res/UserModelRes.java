@@ -61,6 +61,26 @@ public class UserModelRes {
         public ProfileValues getProfileValues() {
             return profileValues;
         }
+
+        public PublicInfo getPublicInfo() {
+            return publicInfo;
+        }
+
+        public Contacts getContacts() {
+            return contacts;
+        }
+
+        public Repositories getRepositories() {
+            return repositories;
+        }
+
+        public String getFirstName() {
+            return firstName;
+        }
+
+        public String getSecondName() {
+            return secondName;
+        }
     }
     public class Repositories {
 
@@ -71,6 +91,9 @@ public class UserModelRes {
         @Expose
         private String updated;
 
+        public List<Repo> getRepo() {
+            return repo;
+        }
     }
     public class Repo {
 
@@ -84,6 +107,9 @@ public class UserModelRes {
         @Expose
         private String title;
 
+        public String getGit() {
+            return git;
+        }
     }
     public class PublicInfo {
 
@@ -100,6 +126,17 @@ public class UserModelRes {
         @Expose
         private String updated;
 
+        public String getAvatar() {
+            return avatar;
+        }
+
+        public String getPhoto() {
+            return photo;
+        }
+
+        public String getBio() {
+            return bio;
+        }
     }
     public class ProfileValues {
 
@@ -163,5 +200,16 @@ public class UserModelRes {
         @Expose
         private String updated;
 
+        public String getVk() {
+            return vk;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public String getEmail() {
+            return email;
+        }
     }
 }

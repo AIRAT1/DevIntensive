@@ -48,6 +48,11 @@ public class PreferencesManager {
         editor.putString(ConstantManager.USER_PHOTO_KEY, uri.toString());
         editor.apply();
     }
+    public void saveUserAvatar(Uri uri) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(ConstantManager.USER_AVATAR_KEY, uri.toString());
+        editor.apply();
+    }
     //// TODO: 13.07.2016
     public List<String> loadUserProfileValues() {
         List<String> userValues = new ArrayList<>();
@@ -68,6 +73,10 @@ public class PreferencesManager {
         return Uri.parse(mSharedPreferences.getString(ConstantManager.USER_PHOTO_KEY,
                 "android.resource://com.softdesign.devintensive/drawable/germany"));
     }
+    public Uri loadUserAvatar() {
+        return Uri.parse(mSharedPreferences.getString(ConstantManager.USER_AVATAR_KEY,
+                "android.resource://com.softdesign.devintensive/drawable/avatar"));
+    }
     public void saveAuthToken(String authToken) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(ConstantManager.AUTH_TOKEN, authToken);
@@ -83,5 +92,18 @@ public class PreferencesManager {
     }
     public String getUserId() {
         return mSharedPreferences.getString(ConstantManager.USER_ID_KEY, "null");
+    }
+
+    public void saveFirstLastName(String firstName, String lastName) {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.putString(ConstantManager.USER_FIRST_NAME_KEY, firstName);
+        editor.putString(ConstantManager.USER_LAST_NAME_KEY, lastName);
+        editor.apply();
+    }
+    public List<String> loadFirstLastName() {
+        List<String> firstLastName = new ArrayList<>();
+        firstLastName.add(mSharedPreferences.getString(ConstantManager.USER_FIRST_NAME_KEY, "null"));
+        firstLastName.add(mSharedPreferences.getString(ConstantManager.USER_LAST_NAME_KEY, "null"));
+        return firstLastName;
     }
 }
