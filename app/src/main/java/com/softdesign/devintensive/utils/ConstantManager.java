@@ -8,6 +8,15 @@ public class ConstantManager {
     public final static String USER_GIT_KEY = "USER_4_KEY";
     public final static String USER_ABOUT_KEY = "USER_5_KEY";
     public static final String USER_PHOTO_KEY = "USER_PHOTO_KEY";
+    public static final String USER_AVATAR_KEY = "USER_AVATAR_KEY";
+    public static final String AUTH_TOKEN = "AUTH_TOKEN";
+    public static final String USER_ID_KEY = "USER_ID_KEY";
+    public static final String USER_RATING_VALUE = "USER_RATING_VALUE";
+    public static final String USER_CODE_LINES_VALUE = "USER_CODE_LINES_VALUE";
+    public static final String USER_PROJECT_VALUE = "USER_PROJECT_VALUE";
+    public static final String USER_FIRST_NAME_KEY = "USER_FIRST_NAME_KEY";
+    public static final String USER_LAST_NAME_KEY = "USER_LAST_NAME_KEY";
+
     public static final int LOAD_PROFILE_PHOTO = 1;
     public static final int REQUEST_CAMERA_PICTURE = 2;
     public static final int REQUEST_GALLERY_PICTURE = 3;
