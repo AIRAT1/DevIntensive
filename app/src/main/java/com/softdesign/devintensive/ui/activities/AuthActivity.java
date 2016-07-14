@@ -40,7 +40,7 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_auth);
 
         mDataManager = DataManager.getInstance();
         mSignIn = (Button) findViewById(R.id.login_btn);
