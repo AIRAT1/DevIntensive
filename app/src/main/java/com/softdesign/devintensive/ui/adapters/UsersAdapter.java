@@ -19,6 +19,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     private Context mContext;
     private List<UserListRes.UserData> mUsers;
     private UserViewHolder.CustomClickListener mCustomClickListener;
+    private int minWidth, minHeight;
 
     public UsersAdapter(List<UserListRes.UserData> users, UserViewHolder.CustomClickListener customClickListener) {
         this.mUsers = users;
@@ -29,6 +30,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     public UserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         View convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user_list, parent, false);
+        minWidth = parent.getMeasuredWidth();
+        minHeight = AspectRatioImageView.calculateHeight(minWidth, AspectRatioImageView.DEFAULT_ASPECT_RATIO);
+
         return new UserViewHolder(convertView, mCustomClickListener);
     }
 
@@ -39,6 +43,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
                 .load(user.getPublicInfo().getPhoto())
                 .placeholder(mContext.getResources().getDrawable(R.drawable.user_bg))
                 .error(mContext.getResources().getDrawable(R.drawable.user_bg))
+                .resize(minWidth, minHeight)
+                .centerCrop()
                 .into(holder.userPhoto);
         holder.mFullName.setText(user.getFullname());
         holder.mRating.setText(String.valueOf(user.getProfileValues().getRating()));
