@@ -74,7 +74,7 @@ public class UserListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<UserListRes> call, Response<UserListRes> response) {
                 try {
-                    if (response.code() == 200) {
+//                    if (response.code() == 200) {
                         mUsers =  response.body().getData();
                         mUsersAdapter = new UsersAdapter(mUsers, new UsersAdapter.UserViewHolder.CustomClickListener() {
                             @Override
@@ -86,9 +86,9 @@ public class UserListActivity extends AppCompatActivity {
                             }
                         });
                         mRecyclerView.setAdapter(mUsersAdapter);
-                    } else {
-                        showSnackbar("Всё пропало шеф!!!");
-                    }
+//                    } else {
+//                        showSnackbar("Всё пропало шеф!!!");
+//                    }
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                     Log.e(TAG, e.toString());

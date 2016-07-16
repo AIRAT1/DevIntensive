@@ -38,14 +38,15 @@ public class ProfileUserActivity extends BaseActivity {
         setContentView(R.layout.activity_profile_user);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.collapsing_toolbar);
-        mRepoListView = (ListView)findViewById(R.id.repositories_list);
-        mUserProjects = (TextView)findViewById(R.id.projects_txt);
-        mUserCodeLines = (TextView)findViewById(R.id.code_lines_txt);
-        mUserRating = (TextView)findViewById(R.id.rating_txt);
-        mUserBio = (EditText)findViewById(R.id.about_et);
         mProfileImage = (ImageView) findViewById(R.id.user_photo_img);
-        mCoordinatorLayout = (CoordinatorLayout)findViewById(R.id.main_coordinator_container);
+        mUserBio = (EditText) findViewById(R.id.about_et);
+        mUserRating = (TextView) findViewById(R.id.rating_value);
+        mUserCodeLines = (TextView) findViewById(R.id.code_lines_value);
+        mUserProjects = (TextView) findViewById(R.id.projects_value);
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_coordinator_container);
+
+        mRepoListView = (ListView) findViewById(R.id.repositories_list);
         setupToolbar();
         initProfileData();
     }

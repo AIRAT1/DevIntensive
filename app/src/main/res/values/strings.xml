@@ -38,4 +38,7 @@
     <string name="auth.password">Введите пароль</string>
     <string name="auth.login">Войти</string>
     <string name="auth.remember">Забыли пароль?</string>
+    <string name="rating">Рейтинг</string>
+    <string name="write_code_lines">Написано строк кода</string>
+    <string name="projects">Проектов</string>
 </resources>
