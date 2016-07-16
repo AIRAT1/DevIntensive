@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +26,6 @@ import retrofit2.Response;
 public class AuthActivity extends BaseActivity implements View.OnClickListener {
     private Button mSignIn;
     private TextView mRememberPassword;
-    private TextInputLayout mWrapLoginEmail, mWrapLoginPassword;
     private EditText mLogin, mPassword;
     private CoordinatorLayout mCoordinatorLayout;
     private DataManager mDataManager;
@@ -44,12 +42,10 @@ public class AuthActivity extends BaseActivity implements View.OnClickListener {
 
         mDataManager = DataManager.getInstance();
         mSignIn = (Button) findViewById(R.id.login_btn);
-        mWrapLoginEmail = (TextInputLayout) findViewById(R.id.wrap_login_email);
-        mWrapLoginPassword = (TextInputLayout) findViewById(R.id.wrap_login_password);
-        mLogin = (EditText) findViewById(R.id.et_login_email);
-        mPassword = (EditText) findViewById(R.id.et_login_password);
+        mLogin = (EditText) findViewById(R.id.login_email_et);
+        mPassword = (EditText) findViewById(R.id.login_password_et);
         mRememberPassword = (TextView) findViewById(R.id.remember_txt);
-        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_Coordinator_container);
+        mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.main_coordinator_container);
 
         mSignIn.setOnClickListener(this);
         mRememberPassword.setOnClickListener(this);

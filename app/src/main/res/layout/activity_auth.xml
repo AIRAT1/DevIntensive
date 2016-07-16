@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_Coordinator_container"
+    android:id="@+id/main_coordinator_container"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/et_login_email"
+                            android:id="@+id/login_email_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@string/ff_regular"
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content">
 
                         <EditText
-                            android:id="@+id/et_login_password"
+                            android:id="@+id/login_password_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@string/ff_regular"

@@ -9,7 +9,10 @@ import java.util.List;
 public class UserListRes {
     @SerializedName("success")
     @Expose
-    private List<UserData> data = new ArrayList<UserData>();
+    private boolean success;
+    @SerializedName("data")
+    @Expose
+    private List<UserData> data = new ArrayList<>();
 
     public List<UserData> getData() {
         return data;

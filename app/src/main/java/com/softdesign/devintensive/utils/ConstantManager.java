@@ -16,6 +16,7 @@ public class ConstantManager {
     public static final String USER_PROJECT_VALUE = "USER_PROJECT_VALUE";
     public static final String USER_FIRST_NAME_KEY = "USER_FIRST_NAME_KEY";
     public static final String USER_LAST_NAME_KEY = "USER_LAST_NAME_KEY";
+    public static final String PARCELABLE_KEY = "PARCELABLE_KEY";
 
     public static final int LOAD_PROFILE_PHOTO = 1;
     public static final int REQUEST_CAMERA_PICTURE = 2;
