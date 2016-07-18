@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mSendEmailImg = (ImageView)findViewById(R.id.send_email_img);
         mShowVkImg = (ImageView)findViewById(R.id.show_vk);
         mShowGithubImg = (ImageView)findViewById(R.id.show_github);
-        mCoordinatorLayout = (CoordinatorLayout)findViewById(R.id.main_Coordinator_container);
+        mCoordinatorLayout = (CoordinatorLayout)findViewById(R.id.main_coordinator_container);
         mNavigationDrawer = (DrawerLayout)findViewById(R.id.navigation_drawer);
         mToolbar = (Toolbar)findViewById(R.id.toolbar);
         mFab = (FloatingActionButton)findViewById(R.id.fab);
