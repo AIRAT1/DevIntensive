@@ -69,7 +69,7 @@ public class UserListActivity extends AppCompatActivity {
     }
 
     private void loadUsers() {
-        Call<UserListRes> call = mDataManager.getUserList();
+        Call<UserListRes> call = mDataManager.getUserListFromNetwork();
         call.enqueue(new Callback<UserListRes>() {
             @Override
             public void onResponse(Call<UserListRes> call, Response<UserListRes> response) {

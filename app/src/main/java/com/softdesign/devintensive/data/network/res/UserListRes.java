@@ -62,5 +62,9 @@ public class UserListRes {
         public String getFullname() {
             return first_name + " " + second_name;
         }
+
+        public String getId() {
+            return id;
+        }
     }
 }
