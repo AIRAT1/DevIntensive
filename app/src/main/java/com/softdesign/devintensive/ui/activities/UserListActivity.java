@@ -2,6 +2,7 @@ package com.softdesign.devintensive.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -39,6 +40,8 @@ public class UserListActivity extends AppCompatActivity {
     private MenuItem mSearchItem;
     private String mQuery;
 
+    private Handler mHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,8 @@ public class UserListActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        mHandler = new Handler();
 
         setupToolbar();
         setupDrawer();
@@ -131,6 +136,15 @@ public class UserListActivity extends AppCompatActivity {
     }
     private void showUserByQuery(String query) {
         mQuery = query;
-        showUsers(mDataManager.getUserListByName(query));
+
+        Runnable searchUsers = new Runnable() {
+            @Override
+            public void run() {
+                showUsers(mDataManager.getUserListByName(mQuery));
+            }
+        };
+        mHandler.removeCallbacks(searchUsers);
+        mHandler.postDelayed(searchUsers, ConstantManager.SEARCH_DELAY);
+
     }
 }

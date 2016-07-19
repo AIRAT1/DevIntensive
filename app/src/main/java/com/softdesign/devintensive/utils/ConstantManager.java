@@ -24,4 +24,5 @@ public class ConstantManager {
     public static final int PERMISSION_REQUEST_SETTINGS_CODE = 4;
     public static final int CAMERA_REQUEST_PERMISSION_CODE = 5;
     public static final int CALL_REQUEST_PERMISSION_CODE = 6;
+    public static final int SEARCH_DELAY = 1500;
 }
