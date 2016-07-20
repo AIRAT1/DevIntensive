@@ -58,8 +58,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
                 .error(holder.mDummy)
                 .placeholder(holder.mDummy)
 //                .fit()
-                .resize(minWidth, minHeight)
-                .centerCrop()
+//                .resize(minWidth, minHeight)
+//                .centerCrop()
                 .networkPolicy(NetworkPolicy.OFFLINE)
                 .into(holder.userPhoto, new Callback() {
                     @Override
@@ -73,8 +73,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
                                 .load(userPhoto)
                                 .error(holder.mDummy)
                                 .placeholder(holder.mDummy)
-                                .resize(minWidth, minHeight)
-                                .centerCrop()
+//                                .resize(minWidth, minHeight)
+//                                .centerCrop()
                                 .into(holder.userPhoto, new Callback() {
                                     @Override
                                     public void onSuccess() {

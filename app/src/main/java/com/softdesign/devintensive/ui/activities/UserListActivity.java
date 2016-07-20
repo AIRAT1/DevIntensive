@@ -22,6 +22,7 @@ import com.softdesign.devintensive.data.manager.DataManager;
 import com.softdesign.devintensive.data.storage.models.User;
 import com.softdesign.devintensive.data.storage.models.UserDTO;
 import com.softdesign.devintensive.ui.adapters.UsersAdapter;
+import com.softdesign.devintensive.utils.AppConfig;
 import com.softdesign.devintensive.utils.ConstantManager;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class UserListActivity extends AppCompatActivity {
     private String mQuery;
 
     private Handler mHandler;
+    private Runnable mSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,12 @@ public class UserListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
         mHandler = new Handler();
+        mSearch = new Runnable() {
+            @Override
+            public void run() {
+                showUsers(mDataManager.getUserListByName(mQuery));
+            }
+        };
 
         setupToolbar();
         setupDrawer();
@@ -137,14 +145,12 @@ public class UserListActivity extends AppCompatActivity {
     private void showUserByQuery(String query) {
         mQuery = query;
 
-        Runnable searchUsers = new Runnable() {
-            @Override
-            public void run() {
-                showUsers(mDataManager.getUserListByName(mQuery));
-            }
-        };
-        mHandler.removeCallbacks(searchUsers);
-        mHandler.postDelayed(searchUsers, ConstantManager.SEARCH_DELAY);
+        mHandler.removeCallbacks(mSearch);
+        if (query.isEmpty()) {
+            mHandler.postDelayed(mSearch, AppConfig.ZERO);
+        }else {
+            mHandler.postDelayed(mSearch, AppConfig.START_DELAY);
+        }
 
     }
 }
